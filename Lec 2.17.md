@@ -43,12 +43,22 @@ eval e case e of
 	ESub ex ex' -> eval e - eval e'
 	EMul ex ex' -> eval e * eval e' -}
 	
+{-
+					--env
+	let x = e1
+	in     -- eval((x:=v):env) e2
+		e2
+-}
+	
 eval :: Env -> Expr -> Value
 eval env e case e of 
 	EVar x  -> lookup x env
 	ENum n	-> n
 	EBin o ex ex' -> evalOp o (eval env ex) (eval env ex')
-	ELet x e1 e2
+	ELet x e1 e2 -> eval env' e2
+									where 
+										env' = (x:= xval) : env
+										xval = eval env e1
 	
 lookup :: Id -> Env -> Value
 lookup x env = case env of
@@ -104,7 +114,7 @@ dummy =
 		in 
 			let x = 100  --[x:=100, x:= 0]
 			in 
-				x + 1 
+				x + 1      --101
 ```
 
 
