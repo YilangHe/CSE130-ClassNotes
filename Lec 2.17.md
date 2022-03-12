@@ -51,7 +51,7 @@ eval e case e of
 -}
 	
 eval :: Env -> Expr -> Value
-eval env e case e of 
+eval env e = case e of 
 	EVar x  -> lookup x env
 	ENum n	-> n
 	EBin o ex ex' -> evalOp o (eval env ex) (eval env ex')
@@ -119,3 +119,22 @@ dummy =
 
 
 
+```haskell
+-- introduce two nonterminals: ExprL and ExprR
+-- ExprL should be recursive, left associative, acts like a "function"
+-- ExprR should contain "arguments"   
+
+Expr : your other rules
+   | ExprL 
+
+ExprL : ExprL ExprR            -- note how this dictates that function application is left assoc
+   | one more rule here.   (hint: to end this recursive definition)
+
+ExprR:  
+   -- define what can be considered as "arguments"
+   -- hint: terminals, brackets, and parenthesis (since bracketized and parenthesized expressions are treated as a whole. Basically the user can use parens to change associativity.)
+```
+
+Study+work+relationship 
+
+self

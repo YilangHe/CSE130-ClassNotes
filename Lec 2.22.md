@@ -26,7 +26,7 @@ EApp eFun eArg -> eval ((x := v2) : env) eBody
 
 ```haskell
 let c = 1                -- > env
-in   										 -- > c := 1 : env frozen env
+in   										 -- > c := 1 : env (frozen env)
 	let inc = \x -> x + c   
 	in 									-- inc:=<x, x+c, frozenenv>, c:=1, env input x, output x + 1
 		let c = 100
